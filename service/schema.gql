@@ -1,0 +1,30 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Product {
+  id: ID!
+  title: String!
+  price: Float!
+  dates: [String!]!
+  description: String!
+  image: String!
+}
+
+type Query {
+  showAll: [Product!]!
+  findById(id: String!): Product!
+}
+
+type Mutation {
+  createProduct(productData: ProductInput!): Product!
+  removeProduct(id: String!): Boolean!
+}
+
+input ProductInput {
+  title: String!
+  price: Float!
+  dates: [String!]!
+  description: String!
+  image: String!
+}
