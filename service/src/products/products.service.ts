@@ -6,23 +6,24 @@ import { Product } from './entities/product.entity';
 
 @Injectable()
 export class ProductsService {
-    constructor(@InjectRepository(Product) private product: Repository<Product>) { }
+  constructor(
+    @InjectRepository(Product) private product: Repository<Product>,
+  ) {}
 
-    async findAll(): Promise<Product[]> {
-        console.log(this.product.find())
-        return this.product.find()
-    }
+  async findAll(): Promise<Product[]> {
+    console.log(this.product.find());
+    return this.product.find();
+  }
 
-    createProduct(body : ProductInput) {
-        return this.product.save(body)
-    }
+  createProduct(body: ProductInput) {
+    return this.product.save(body);
+  }
 
-    async findById(id: string) : Promise<Product> {
-        return this.product.findOne(id)
-    }
+  async findById(id: string): Promise<Product> {
+    return this.product.findOne(id);
+  }
 
-    removeProduct(id: string) {
-        return this.product.delete(id)
-    }
-
+  removeProduct(id: string) {
+    return this.product.delete(id);
+  }
 }
