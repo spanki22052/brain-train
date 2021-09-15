@@ -16,6 +16,8 @@ export const ProductBlock = styled.div`
   margin-left: 25px;
   margin-top: 10px;
 
+  background: white;
+
   box-shadow: 0 0 8px rgb(0, 0, 0, 0.08);
   border-radius: 15px;
 
@@ -34,7 +36,7 @@ export const ProductBlock = styled.div`
       stroke: white;
     }
     .circle {
-      fill: #8b8b8b;
+      fill: #f0b340;
     }
   }
 

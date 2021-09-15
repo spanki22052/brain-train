@@ -1,0 +1,12 @@
+"use strict";
+exports.__esModule = true;
+var react_dom_1 = require("react-dom");
+require("./index.css");
+var reportWebVitals_1 = require("./reportWebVitals");
+require("bootstrap/dist/css/bootstrap.min.css");
+var store_1 = require("./Components/Redux/store");
+var Root_1 = require("./Components/Root");
+var store = store_1["default"]();
+document.body.style.backgroundColor = "#F2F2F2";
+react_dom_1["default"].render(React.createElement(Root_1["default"], { store: store }), document.getElementById("root"));
+reportWebVitals_1["default"]();

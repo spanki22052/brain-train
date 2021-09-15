@@ -11,7 +11,6 @@ export class ProductsService {
   ) {}
 
   async findAll(): Promise<Product[]> {
-    console.log(this.product.find());
     return this.product.find();
   }
 

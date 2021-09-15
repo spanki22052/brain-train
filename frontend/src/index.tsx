@@ -1,34 +1,14 @@
-import ReactDOM from 'react-dom';
-import './index.css';
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-import reportWebVitals from './reportWebVitals';
-import Mainpage from './Components/Mainpage';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import NavbarComponent from './Components/Navbar';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
+import ReactDOM from "react-dom";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
+import "bootstrap/dist/css/bootstrap.min.css";
+import configureStore from "./Components/Redux/store";
+import Root from "./Components/Root";
 
-const client = new ApolloClient({
-  uri: "http://localhost:3000/graphql",
-  cache: new InMemoryCache(),
-});
+const store = configureStore();
 
-ReactDOM.render(
-  <ApolloProvider client={client}>
+document.body.style.backgroundColor = "#F2F2F2";
 
-    <Router>
-      <NavbarComponent />
-      <Switch>
-        <Route path="/" exact>
-          <Mainpage />
-        </Route>
-      </Switch>
-    </Router>
-  </ApolloProvider>,
-  document.getElementById('root')
-);
+ReactDOM.render(<Root store={store} />, document.getElementById("root"));
 
 reportWebVitals();

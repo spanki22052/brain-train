@@ -1,37 +1,15 @@
-import { gql, useQuery } from "@apollo/client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { ProductInterface } from "../Interfaces/products.interface";
+import { cartAction } from "../Redux/actions/cartAction";
+import { useAppSelector } from "../Redux/store";
+import { PlusSVG } from "../SVG/plus";
 import {
   MainpageBlock,
   ProductBlock,
   ProductBlocksHolder,
   TextHolder,
 } from "./style";
-
-interface ProductInterface {
-  title: string;
-  price: number;
-  id: string;
-  description: string;
-  dates: [string];
-  image: string;
-}
-
-interface ProductData {
-  showAll: ProductInterface[];
-}
-
-export const GET_PRODUCTS_LIST = gql`
-  query {
-    showAll {
-      title
-      id
-      description
-      price
-      image
-      dates
-    }
-  }
-`;
 
 export const daysList = [
   "Понедельник",
@@ -44,13 +22,16 @@ export const daysList = [
 ];
 
 const Mainpage = () => {
-  const { loading, data } = useQuery<ProductData>(GET_PRODUCTS_LIST);
-  const [products, setProducts] = useState<ProductInterface[]>();
   const [currentDay, setDay] = useState("");
+  const [currentFoodType, setFoodType] = useState("");
+  const foodTypes: string[] = useAppSelector(
+    (state) => state.foodTypesInterface.foodtypes
+  );
+  const ProductsList: ProductInterface[] = useAppSelector(
+    (state) => state.productDataInterface.showAll
+  );
 
-  useEffect(() => {
-    if (!loading) data !== undefined && setProducts(data.showAll);
-  }, [data, loading]);
+  const dispatch = useDispatch();
 
   return (
     <MainpageBlock>
@@ -66,37 +47,48 @@ const Mainpage = () => {
             </p>
           );
         })}
+        <p style={{ cursor: "pointer" }} onClick={() => setDay("")}>
+          Все
+        </p>
+      </TextHolder>
+      <TextHolder>
+        {foodTypes !== undefined &&
+          foodTypes.map((el, index) => {
+            return (
+              <p
+                style={{ cursor: "pointer" }}
+                key={index}
+                onClick={() => setFoodType(el)}
+              >
+                {el}
+              </p>
+            );
+          })}
+        <p style={{ cursor: "pointer" }} onClick={() => setFoodType("")}>
+          Все
+        </p>
       </TextHolder>
       <ProductBlocksHolder>
-        {products !== undefined &&
-          products
-            .filter((el) => (currentDay ? el.dates.includes(currentDay) : true))
+        {ProductsList !== undefined &&
+          foodTypes !== undefined &&
+          ProductsList.filter((el) =>
+            currentDay ? el.dates.includes(currentDay) : true
+          )
+            .filter((el) =>
+              currentFoodType ? el.foodtype === currentFoodType : true
+            )
             .map((el, index) => {
               return (
                 <ProductBlock key={index}>
                   <img src={el.image} alt="im" />
                   <h1>{el.title}</h1>
                   <h2>{el.description}</h2>
-                  <span>
-                    <svg
-                      width="30"
-                      height="30"
-                      viewBox="0 0 22 22"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        className="circle"
-                        d="M11 21C16.5228 21 21 16.5228 21 11C21 5.47715 16.5228 1 11 1C5.47715 1 1 5.47715 1 11C1 16.5228 5.47715 21 11 21Z"
-                        stroke="#8B8B8B"
-                      />
-                      <path
-                        className="plus"
-                        d="M11 7V11M11 11V15M11 11H15M11 11H7"
-                        stroke="#8B8B8B"
-                        stroke-linecap="round"
-                      />
-                    </svg>
+                  <span
+                    onClick={() => {
+                      dispatch(cartAction(index, el.price));
+                    }}
+                  >
+                    <PlusSVG />
                   </span>
                 </ProductBlock>
               );

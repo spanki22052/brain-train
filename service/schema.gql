@@ -9,6 +9,7 @@ type Product {
   dates: [String!]!
   description: String!
   image: String!
+  foodtype: String!
 }
 
 type Query {
@@ -28,4 +29,5 @@ input ProductInput {
   dates: [String!]!
   description: String!
   image: String!
+  foodtype: String!
 }
