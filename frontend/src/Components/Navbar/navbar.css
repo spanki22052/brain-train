@@ -1,0 +1,25 @@
+.navbar-brand a {
+    color: #6A4808;
+}
+
+.badge-holder {
+    position: relative;
+}
+
+.navbar-component {
+    position: relative;
+}
+
+.badge-item {
+    position: absolute;
+
+    top: -8px;
+    right: -15px;
+}
+
+.cart-item-holder {
+    position: absolute;
+
+    right: 20%;
+    top: 5px;
+}

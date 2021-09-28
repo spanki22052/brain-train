@@ -8,6 +8,8 @@ import NavbarComponent from "../Navbar";
 import Mainpage from "../Mainpage";
 import CartPage from "../CartPage";
 import "./root.css";
+import Admin from "../Admin";
+import CashierStatus from "../Cashier";
 
 const client = new ApolloClient({
   uri: "http://localhost:3000/graphql",
@@ -30,6 +32,12 @@ const Root: React.FunctionComponent<Props> = (props) => {
             </Route>
             <Route path="/cart" exact>
               <CartPage />
+            </Route>
+            <Route path="/admin">
+              <Admin />
+            </Route>
+            <Route path="/cashier">
+              <CashierStatus />
             </Route>
           </Switch>
         </Router>

@@ -1,14 +1,15 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { ProductInterface } from "../Interfaces/products.interface";
 import { cartAction } from "../Redux/actions/cartAction";
 import { useAppSelector } from "../Redux/store";
 import { PlusSVG } from "../SVG/plus";
 import {
+  DaysP,
+  DaysStateHolder,
   MainpageBlock,
   ProductBlock,
   ProductBlocksHolder,
-  TextHolder,
 } from "./style";
 
 export const daysList = [
@@ -21,6 +22,8 @@ export const daysList = [
   "Воскресенье",
 ];
 
+const shortDaysList = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+
 const Mainpage = () => {
   const [currentDay, setDay] = useState("");
   const [currentFoodType, setFoodType] = useState("");
@@ -31,68 +34,87 @@ const Mainpage = () => {
     (state) => state.productDataInterface.showAll
   );
 
+  var daysTranslatorObject = {};
+
+  shortDaysList.map(
+    (el, index) =>
+      (daysTranslatorObject = {
+        ...daysTranslatorObject,
+        [el]: daysList[index],
+      })
+  );
+
   const dispatch = useDispatch();
+
+  const getFilteredProductList = useCallback(() => {
+    let filteredProductList: ProductInterface[] = ProductsList;
+    if (currentDay) {
+      filteredProductList = filteredProductList.filter((el) =>
+        el.dates.includes(currentDay)
+      );
+    }
+    if (currentFoodType) {
+      filteredProductList = filteredProductList.filter(
+        (el) => el.foodtype === currentFoodType
+      );
+    }
+
+    return filteredProductList;
+  }, [ProductsList, currentFoodType, currentDay]);
 
   return (
     <MainpageBlock>
-      <TextHolder>
-        {daysList.map((el, index) => {
+      <DaysStateHolder>
+        <p style={{ cursor: "auto" }}>День недели:</p>
+        {shortDaysList.map((el, index) => {
           return (
-            <p
-              style={{ cursor: "pointer" }}
+            <DaysP
+              bkg={currentDay === daysList[index] ? true : false}
+              onClick={() => setDay(daysList[index])}
               key={index}
-              onClick={() => setDay(el)}
             >
               {el}
-            </p>
+            </DaysP>
           );
         })}
-        <p style={{ cursor: "pointer" }} onClick={() => setDay("")}>
+        <DaysP onClick={() => setDay("")} bkg={currentDay ? false : true}>
           Все
-        </p>
-      </TextHolder>
-      <TextHolder>
+        </DaysP>
+      </DaysStateHolder>
+
+      <select
+        value={currentFoodType}
+        onChange={(e) => setFoodType(e.target.value)}
+      >
         {foodTypes !== undefined &&
           foodTypes.map((el, index) => {
             return (
-              <p
-                style={{ cursor: "pointer" }}
-                key={index}
-                onClick={() => setFoodType(el)}
-              >
+              <option key={index} value={el}>
                 {el}
-              </p>
+              </option>
             );
           })}
-        <p style={{ cursor: "pointer" }} onClick={() => setFoodType("")}>
-          Все
-        </p>
-      </TextHolder>
+        <option value="">Выберите категорию блюд</option>
+      </select>
+
       <ProductBlocksHolder>
-        {ProductsList !== undefined &&
-          foodTypes !== undefined &&
-          ProductsList.filter((el) =>
-            currentDay ? el.dates.includes(currentDay) : true
-          )
-            .filter((el) =>
-              currentFoodType ? el.foodtype === currentFoodType : true
-            )
-            .map((el, index) => {
-              return (
-                <ProductBlock key={index}>
-                  <img src={el.image} alt="im" />
-                  <h1>{el.title}</h1>
-                  <h2>{el.description}</h2>
-                  <span
-                    onClick={() => {
-                      dispatch(cartAction(index, el.price));
-                    }}
-                  >
-                    <PlusSVG />
-                  </span>
-                </ProductBlock>
-              );
-            })}
+        {ProductsList &&
+          getFilteredProductList().map((el, index) => {
+            return (
+              <ProductBlock key={index}>
+                <img src={el.image} alt="im" />
+                <h1>{el.title}</h1>
+                <h2>{el.description}</h2>
+                <span
+                  onClick={() => {
+                    dispatch(cartAction(el.id, el.price, el));
+                  }}
+                >
+                  <PlusSVG />
+                </span>
+              </ProductBlock>
+            );
+          })}
       </ProductBlocksHolder>
     </MainpageBlock>
   );

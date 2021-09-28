@@ -1,32 +1,39 @@
-export const cartAction = (id: number, sum: number) => {
+import { ProductInterface } from "../../Interfaces/products.interface";
+
+export const cartAction = (
+  id: string,
+  sum: number,
+  product: ProductInterface
+) => {
   return {
     type: "ADD_NEW_PRODUCT",
     payload: id,
     sum: sum,
+    product: product,
   };
 };
 
-export const ProductPlusOneAction = (id: number, sum: number) => {
+export const ProductPlusOneAction = (id: string, sum: number) => {
   return {
     type: "PRODUCT_PLUS_ONE",
-    payload: id,
+    id: id,
     sum: sum,
   };
 };
 
-export const ProductMinusOneAction = (id: number, sum: number) => {
+export const ProductMinusOneAction = (id: string, sum: number) => {
   return {
     type: "PRODUCT_MINUS_ONE",
-    payload: id,
+    id: id,
     sum: sum,
   };
 };
 
-export const RemoveCartAction = (id: number, sum: number) => {
-  console.log(id);
+export const RemoveCartAction = (id: number, sum: number, amount: number) => {
   return {
     type: "REMOVE_PRODUCT",
-    payload: id,
+    id: id,
     minusSum: sum,
+    minusAmount: amount,
   };
 };

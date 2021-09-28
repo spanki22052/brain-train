@@ -1,6 +1,5 @@
 import { AnyAction, applyMiddleware, createStore, Store } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import thunk from "redux-thunk";
 import AppState from "./reducers/AppState";
 import { combineReducers } from "redux";
 import { foodtypesReducer } from "./reducers/foodtypes";
@@ -20,6 +19,6 @@ export default function configureStore(): Store<AppState, AnyAction> {
   return createStore(
     rootReducer,
     undefined,
-    composeWithDevTools(applyMiddleware(thunk))
+    composeWithDevTools(applyMiddleware())
   );
 }

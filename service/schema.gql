@@ -19,7 +19,7 @@ type Query {
 }
 
 type Mutation {
-  createProduct(productData: ProductInput!): Product!
+  createProduct(product: ProductInput!): Product!
   removeProduct(id: String!): Boolean!
 }
 

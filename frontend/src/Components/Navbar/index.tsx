@@ -1,11 +1,15 @@
 import { gql, useQuery } from "@apollo/client";
-import { useEffect } from "react";
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { useCallback, useEffect } from "react";
+import { Badge, Container, Nav, Navbar } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { ProductData } from "../Interfaces/products.interface";
 import { updateDataAction } from "../Redux/actions/foodtypesActions";
 import { updateProductsAction } from "../Redux/actions/productsTypesAction";
 import { Link } from "react-router-dom";
+import { linkStyle } from "./dist/styles";
+import { CartSVG } from "../SVG/cart";
+import "./navbar.css";
+import { useAppSelector } from "../Redux/store";
 
 const GET_FOOD_TYPES = gql`
   query {
@@ -34,8 +38,14 @@ export const GET_PRODUCTS_LIST = gql`
 const NavbarComponent = () => {
   const foodTypesData = useQuery<FoodTypesData>(GET_FOOD_TYPES);
   const productData = useQuery<ProductData>(GET_PRODUCTS_LIST);
-
   const dispatch = useDispatch();
+
+  const cartList = useAppSelector((state) => state.cartStateInterface);
+
+  const cartAmount = useCallback(
+    () => cartList.productInfo.reduce((a, b) => a + b.amount, 0),
+    [cartList]
+  );
 
   useEffect(() => {
     if (!foodTypesData.loading)
@@ -51,18 +61,28 @@ const NavbarComponent = () => {
 
   return (
     <div className="navbar-component">
-      <Navbar bg="light" expand="lg">
+      <Navbar style={{ backgroundColor: "#F0B340" }} expand="lg">
         <Container>
           <Navbar.Brand>
-            <Link to="/">React-Bootstrap</Link>
+            <Link style={linkStyle} to="/">
+              <img width="167px" height="43px" src="/logo.png" alt="logo" />
+            </Link>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link>
-                <Link to="/cart">Cart</Link>
+              <Nav.Link className="cart-item-holder">
+                <Link className="badge-holder" style={linkStyle} to="/cart">
+                  <CartSVG />
+                  <Badge className="badge-item" pill bg="danger">
+                    {cartAmount() < 99
+                      ? cartAmount() === 0
+                        ? ""
+                        : cartAmount()
+                      : "99+"}
+                  </Badge>
+                </Link>
               </Nav.Link>
-              <Nav.Link href="#link">Link</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

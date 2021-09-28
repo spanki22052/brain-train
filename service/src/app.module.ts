@@ -6,13 +6,20 @@ import { AppService } from './app.service';
 import { config } from './orm.config';
 import { ProductsModule } from './products/products.module';
 import { FoodtypesModule } from './foodtypes/foodtypes.module';
+import { RequestsModule } from './requests/requests.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(config), ProductsModule, GraphQLModule.forRoot({
-    installSubscriptionHandlers: true,
-    autoSchemaFile: 'schema.gql',
-  }), FoodtypesModule],
+  imports: [
+    TypeOrmModule.forRoot(config),
+    ProductsModule,
+    GraphQLModule.forRoot({
+      installSubscriptionHandlers: true,
+      autoSchemaFile: 'schema.gql',
+    }),
+    FoodtypesModule,
+    RequestsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

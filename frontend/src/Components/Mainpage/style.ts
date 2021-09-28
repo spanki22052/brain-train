@@ -7,6 +7,52 @@ export const MainpageBlock = styled.div`
   flex-direction: column;
   flex-wrap: wrap;
   padding: 10px;
+
+  select {
+    width: 300px;
+    margin-left: 25px;
+    margin-bottom: 20px;
+    height: 30px;
+    font-size: 1.1em;
+    color: #6a4808;
+
+    background-color: #f0b340;
+    border: #6a4808;
+  }
+
+  option:hover {
+    color: #f0b340;
+
+    background-color: #6a4808;
+  }
+`;
+
+interface dayPInterface {
+  bkg: boolean;
+}
+
+export const DaysStateHolder = styled.div`
+  width: 450px;
+  min-width: 300px;
+  margin-left: 25px;
+
+  display: flex;
+  justify-content: space-between;
+
+  p {
+    padding: 5px;
+
+    color: #563a06;
+    font-size: 1.2em;
+    font-weight: 500;
+  }
+`;
+
+export const DaysP = styled.p<dayPInterface>`
+  cursor: pointer;
+
+  background: ${(props) => (props.bkg === true ? "#F0B340" : "none")};
+  border-radius: 5px;
 `;
 
 export const ProductBlock = styled.div`

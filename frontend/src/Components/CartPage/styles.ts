@@ -18,6 +18,31 @@ export const CartHolder = styled.div`
   position: relative;
 `;
 
+export const SendCartButton = styled.button`
+  width: 120px;
+  height: 35px;
+
+  background: #f0b340;
+  border-radius: 4px;
+
+  font-family: Cormorant;
+  font-weight: 600;
+  font-size: 18px;
+
+  color: #563a06;
+
+  border: none;
+
+  position: absolute;
+  bottom: 25px;
+  left: 25px;
+
+  &:hover {
+    background-color: #e7a831;
+    color: #78520a;
+  }
+`;
+
 export const CartBlock = styled.div`
   width: 80%;
   background-color: white;
@@ -57,7 +82,7 @@ export const CartProductBlock = styled.div`
   width: 100%;
   height: 100px;
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
 
   position: relative;
 
@@ -71,6 +96,20 @@ export const CartProductBlock = styled.div`
     width: 150px;
     height: 80px;
     object-fit: cover;
+  }
+
+  @media screen and (max-width: 400px) {
+
+    height: auto;
+
+    img {
+      width: 80%;
+      height: 120px;
+      margin: auto;
+    }
+    .text-holder {
+      margin: 5px !important;
+    }
   }
 
   .text-holder {
@@ -90,9 +129,10 @@ export const CartProductBlock = styled.div`
     position: absolute;
     bottom: 10px;
     right: 10px;
+    margin-right: 40px
 
-    width: 100px;
     height: 35px;
+    width: 125px;
 
     display: flex;
     justify-content: space-between;
@@ -133,4 +173,9 @@ export const TrashButton = styled.button`
   height: 30px;
 
   border: 0;
+`;
+
+export const CartStateH1 = styled.h1`
+  font-size: 1.4em;
+  font-family: "Helvetica", sans-serif;
 `;
