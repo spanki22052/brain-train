@@ -6,20 +6,30 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 exports.__esModule = true;
-exports.RequestDto = void 0;
+exports.RequestInput = void 0;
 var graphql_1 = require("@nestjs/graphql");
-var RequestDto = /** @class */ (function () {
-    function RequestDto() {
+var graphql_type_json_1 = require("graphql-type-json");
+var RequestInput = /** @class */ (function () {
+    function RequestInput() {
     }
     __decorate([
         graphql_1.Field()
-    ], RequestDto.prototype, "productId");
+    ], RequestInput.prototype, "userId");
     __decorate([
         graphql_1.Field()
-    ], RequestDto.prototype, "amount");
-    RequestDto = __decorate([
+    ], RequestInput.prototype, "comment");
+    __decorate([
+        graphql_1.Field()
+    ], RequestInput.prototype, "commentTime");
+    __decorate([
+        graphql_1.Field()
+    ], RequestInput.prototype, "name");
+    __decorate([
+        graphql_1.Field(function (type) { return graphql_type_json_1["default"]; })
+    ], RequestInput.prototype, "product");
+    RequestInput = __decorate([
         graphql_1.InputType()
-    ], RequestDto);
-    return RequestDto;
+    ], RequestInput);
+    return RequestInput;
 }());
-exports.RequestDto = RequestDto;
+exports.RequestInput = RequestInput;

@@ -1,13 +1,18 @@
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class ProductRequestEntity {
+@ObjectType()
+export class RequestEntityObject {
   @PrimaryGeneratedColumn()
+  @Field((type) => ID)
   id: number;
 
   @Column()
-  name: string;
+  @Field()
+  amount: number;
 
   @Column()
-  productId: string;
+  @Field()
+  productId: number;
 }

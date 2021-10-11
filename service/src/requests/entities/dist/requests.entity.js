@@ -7,24 +7,39 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 exports.__esModule = true;
 exports.RequestEntity = void 0;
+var graphql_1 = require("@nestjs/graphql");
 var typeorm_1 = require("typeorm");
+var product_request_entity_1 = require("./product-request.entity");
 var RequestEntity = /** @class */ (function () {
     function RequestEntity() {
     }
     __decorate([
-        typeorm_1.PrimaryGeneratedColumn()
+        typeorm_1.PrimaryGeneratedColumn(),
+        graphql_1.Field(function (type) { return graphql_1.ID; })
     ], RequestEntity.prototype, "id");
     __decorate([
-        typeorm_1.Column()
+        typeorm_1.Column(),
+        graphql_1.Field()
     ], RequestEntity.prototype, "userId");
     __decorate([
-        typeorm_1.Column()
-    ], RequestEntity.prototype, "comment");
+        typeorm_1.Column(),
+        graphql_1.Field()
+    ], RequestEntity.prototype, "commentTime");
     __decorate([
-        typeorm_1.Column('json')
+        typeorm_1.Column(),
+        graphql_1.Field()
+    ], RequestEntity.prototype, "requestTime");
+    __decorate([
+        typeorm_1.Column('json'),
+        graphql_1.Field(function (type) { return [product_request_entity_1.RequestEntityObject]; })
     ], RequestEntity.prototype, "product");
+    __decorate([
+        typeorm_1.Column(),
+        graphql_1.Field()
+    ], RequestEntity.prototype, "name");
     RequestEntity = __decorate([
-        typeorm_1.Entity()
+        typeorm_1.Entity(),
+        graphql_1.ObjectType()
     ], RequestEntity);
     return RequestEntity;
 }());

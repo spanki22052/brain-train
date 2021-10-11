@@ -18,8 +18,13 @@ var RequestsService = /** @class */ (function () {
         this.requests = requests;
     }
     RequestsService.prototype.createProduct = function (requestDto) {
-        console.log(requestDto);
         this.requests.save(requestDto);
+    };
+    RequestsService.prototype.findAll = function () {
+        return this.requests.find();
+    };
+    RequestsService.prototype.removeById = function (id) {
+        return this.requests["delete"](id);
     };
     RequestsService = __decorate([
         common_1.Injectable(),

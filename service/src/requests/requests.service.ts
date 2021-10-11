@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { RequestDto } from './dto/request.dto';
+import { RequestInput } from './dto/request.input';
 import { RequestEntity } from './entities/requests.entity';
 
 @Injectable()
@@ -11,8 +11,15 @@ export class RequestsService {
     private requests: Repository<RequestEntity>,
   ) {}
 
-  createProduct(requestDto: RequestDto) {
-    console.log(requestDto);
+  createProduct(requestDto: RequestInput) {
     this.requests.save(requestDto);
+  }
+
+  findAll() {
+    return this.requests.find();
+  }
+
+  removeById(id: string) {
+    return this.requests.delete(id);
   }
 }

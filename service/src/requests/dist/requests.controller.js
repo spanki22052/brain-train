@@ -19,10 +19,23 @@ var RequestsController = /** @class */ (function () {
         this.requestsService.createProduct(body);
         return 'Sent';
     };
+    RequestsController.prototype.hello = function () {
+        return this.requestsService.findAll();
+    };
+    RequestsController.prototype["delete"] = function (id) {
+        return this.requestsService.removeById(id);
+    };
     __decorate([
         common_1.Post(),
         __param(0, common_1.Body())
     ], RequestsController.prototype, "get");
+    __decorate([
+        common_1.Get()
+    ], RequestsController.prototype, "hello");
+    __decorate([
+        common_1.Delete(':id'),
+        __param(0, common_1.Param('id'))
+    ], RequestsController.prototype, "delete");
     RequestsController = __decorate([
         common_1.Controller('requests')
     ], RequestsController);
